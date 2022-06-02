@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+import Homepage from "./pages/Landing";
+import RepositoryDetail from "./pages/RepoDetail";
+import SearchPage from "./pages/Search";
+import ErrorPage from "./pages/Error";
 
 function App() {
+  const Theme = {
+    colors: { primary: "#faf4e4", secondary: "#19487b", tertiary: "#d1e7e1" },
+    fontSizes: { title: "clamp(1.25rem, 5vw, 4rem)", body: "1rem" },
+    // mediaQuerySmall: "320px",
+    // mediaQueryMedium: "600px",
+    // mediaQueryLarge: "800px",
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <ThemeProvider theme={Theme}>
+        <Routes>
+          <Route exact path="/error" element={<ErrorPage />} />
+          <Route path="/repository/*" element={<RepositoryDetail />} />
+          <Route path="/search/:q" element={<SearchPage />} />
+          <Route exact path="/" element={<Homepage />} />
+        </Routes>
+      </ThemeProvider>
+    </Router>
   );
 }
 
